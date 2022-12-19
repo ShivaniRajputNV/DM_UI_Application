@@ -1,0 +1,118 @@
+[
+  {
+  "Name" : "Person",
+  "path" : ""
+},
+  {
+    "Name" : "Account",
+    "path" : ""
+  },
+  {
+    "Name" : "Premise",
+    "path" : ""
+  },
+  {
+    "Name" : "SA",
+    "path" : ""
+  },
+  {
+    "Name" : "SP",
+    "path" : ""
+  },
+  {
+    "Name" : "Device",
+    "path" : ""
+  },
+  {
+    "Name" : "Device Config",
+    "path" : ""
+  },
+  {
+    "Name" : "Measuring Components",
+    "path" : ""
+  },
+  {
+    "Name" : "Install Event",
+    "path" : ""
+  },
+  {
+    "Name" : "Contact",
+    "path" : ""
+  },
+  {
+    "Name" : "Usage Subscription",
+    "path" : ""
+  },
+  {
+    "Name" : "Service Point ",
+    "path" : ""
+  },
+  {
+    "Name" : "Initial Measurement Data",
+    "path" : ""
+  },
+  {
+    "Name" : "Final Measurement Data",
+    "path" : ""
+  },
+  {
+    "Name" : "Usage Transaction",
+    "path" : ""
+  },
+  {
+    "Name" : "Usage Request",
+    "path" : ""
+  },
+  {
+    "Name" : "Bill",
+    "path" : ""
+  },
+  {
+    "Name" : "Bill Segment",
+    "path" : ""
+  },
+  {
+    "Name" : "Payment Event",
+    "path" : ""
+  },
+  {
+    "Name" : "Payment",
+    "path" : ""
+  },
+  {
+    "Name" : "Pay Segment",
+    "path" : ""
+  },
+  {
+    "Name" : "Financial Transactions",
+    "path" : ""
+  },
+  {
+    "Name" : "Adjustments",
+    "path" : ""
+  },
+  {
+    "Name" : "Case",
+    "path" : ""
+  },
+  {
+    "Name" : "Customer Contacts",
+    "path" : ""
+  },
+  {
+    "Name" : "ToDo Entry",
+    "path" : ""
+  },
+  {
+    "Name" : "Collection",
+    "path" : ""
+  },
+  {
+    "Name" : "Severance",
+    "path" : ""
+  },
+  {
+    "Name" : "Write Off Process",
+    "path" : ""
+  }
+  ]

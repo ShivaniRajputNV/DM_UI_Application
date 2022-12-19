@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Data Migration Portal</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" 
+integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" 
+integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        function callApi(){
+          var s = document.getElementById("entity").value;
+          var loc="http://localhost:8080/api/download";
+          document.getElementById("download").setAttribute("href",loc+"/"+s);
+        }
+
+        // read csv file on drop down
+        $(document).ready(function () {
+                        $('#dropDownList').change(function () {
+                            var selectedFileName = $(this).children("option:selected").val();
+                            var fileName = selectedFileName + ".csv";
+                                $.ajax({
+                                    url: "/api/read/"+selectedFileName,
+                                    dataType: "json",
+                                    success: function (data) {
+                                        console.log(data);
+                                        table_data = `<table>`;
+                                        for (const key in data) {
+                                            if (data.hasOwnProperty(key)) {
+                                                table_data+=`<tr>`;
+                                                table_data+=`<td>`+ `${key}`+`</td>`;
+                                                table_data+=`<td>`+`<input type="text"`+ `value="`+`${data[key]}"`+`>`+`</td>`;
+                                                table_data+=`</tr>`
+                                                console.log(`${key}: ${data[key]}`);
+                                            }
+                                        }
+                                        table_data+=`</table>`;
+                                        document.getElementById("csv_data_onselect").innerHTML = table_data;
+                                    },
+                                    error: function (jqXHR, textStatus, errorThrown) {
+                                        console.log("AJAX Error: " + textStatus + ' : ' + errorThrown);
+                                    },
+                                });
+                        });
+                    });
+        </script>
+
+        
+</head>
+
+
+<body>
+  
+   <section >
+     <nav class="Nav fixed-top">
+       
+            <img src="" th:src ="@{images/logo1.png}" alt="">
+        <h1>Oracle Utility - Data Migration Portal</h1>
+            <img src="" th:src ="@{images/logo2.png}" alt="">
+      
+    </nav>
+    </section>
+<section class="nav1">
+    <div>
+        <h2>Admin</h2>
+    </div>
+</section>
+
+    <section class="form1">
+       
+        <div> 
+        
+            <h3>Global Lookup</h3>
+
+            <form id="form" method="post" th:action=@{/api/save} th:object="${data}">
+                <table>
+                    <div class="form-group" th:each=" map : ${data}">
+                        <tr>
+                            <td><label id="key" th:name="${map.key}" th:text="${map.key}"></label></td>
+                            <td><input id="value" th:name="${map.key}" type="text" th:value="${map.value}" class="form-control"></td>
+                        </tr>
+                    </div>
+          
+            </table>
+            <div class="form-group">
+                <input type="submit" value="CLICK TO SET GLOBAL VALUES IN LOOKUP FILE" class="btn btn-success" />
+               </div>
+             </form>
+    </section>
+    <section class="form2">
+        <div>
+            <h3>Fill Entity Lookup Field Values</h3>
+            <table>
+                <tr>
+                    <td><label for="Entity Name">Entity Name</label></td>
+                    <td>
+                        <select id="dropDownList">
+                            <option selected>Select Entity</option>
+                            <option th:each="option : ${entities}" th:text="${option.Name}">
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </section>
+    <section class="form3">
+        <div >
+            <h3>Primary Lookup File</h3>
+            
+            <form method="post">
+                <table>
+                <div class="form-group" th:each=" map : ${data}" id="csv_data_onselect">
+                    <tr>
+                   <td><label th:text="${map.key}"></label></td>
+                    <td><input type="text" th:value="${map.value}" class="form-control"></td>
+                 </tr>
+                </div>
+           <tr>
+               
+            </tr>
+            </table>
+
+             </form>
+             <!-- <div id="csv_data_onselect">
+            </div> -->
+            </section>
+        
+        <section class="form4">
+      
+            <h3>Secondary Lookup File (Optional)</h3>
+            
+            <form method="post">
+                <table>
+                <div class="form-group" th:each=" map : ${data}">
+                    <tr>
+                   <td><label th:text="${map.key}"></label></td>
+                    <td><input type="text" th:value="${map.value}" class="form-control"></td>
+                 </tr>
+                </div>
+           <tr>
+                
+            </tr>
+            </table>
+            <button type="button">CLICK TO SUBMIT</button>
+             </form>
+             <table class="message">
+                <tr>
+                    <td>Lookup values updated successfully</td>
+                </tr>
+        </div>
+        
+        </table>
+    </section>
+    <section class="form5">
+        <div >
+            <h3>Download Entity Lookup Sample File</h3>
+
+            <div th:if="${ not#lists.isEmpty(entities)}">
+                <table>
+                    <tr>
+                        <td>Entities</td>
+                        <td>&nbsp;</td>
+                        <td>
+                            <select id="entity" onchange="callApi()">
+                                <option  selected>Select Entity</option>
+                                <option th:each=" data: ${entities}" th:value="${data.Name}" th:text="${data.Name}"></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <table>
+            </div>
+            <!-- <td> -->
+                <!-- <a th:href="@{http://localhost:9083/api/download/Global_Lookup"> -->
+                    <!-- <a href="http://localhost:9083/api/download/Global_Lookup"> -->
+                    <a id="download">
+                    <button type="button" class="btn btn-success btn-sm" id="download"> DOWNLOAD FILE</button>
+                </a>
+            <!-- <button type="button">CLICK TO DOWNLOAD FILE</button> -->
+        </div>
+    </section>
+
+ <!-- <script>
+        function onSubmit() {
+            var data =  $(form).serializeArray();
+            console.log(data);
+                
+                // $.ajax({
+                //     type: "POST",
+                //     traditional:true,
+                //     url: "/",
+                //     content: "application/json; charset=utf-8",
+                //     dataType: "json",
+                //     data: JSON.stringify(data),
+                //     success: function () {
+                //     }
+                // });
+
+            }
+    
+    </script> -->
+</body>
+
+</html>
